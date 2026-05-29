@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DecideWise — Decide with Clarity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #0d0d0d;
+      --paper: #f7f4ef;
+      --cream: #ede9e0;
+      --gold: #c8973a;
+      --gold-light: #e8b95a;
+      --rust: #b84c2b;
+      --sage: #4a6741;
+      --muted: #7a7269;
+      --border: #d4cfc4;
+      --card: #ffffff;
+      --shadow: rgba(13,13,13,0.08);
+    }
+    body { font-family: 'Outfit', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
+    #root { min-height: 100vh; }
+    
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+</html>

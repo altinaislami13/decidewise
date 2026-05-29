@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --paper: #f7f3ee;
+  --cream: #efe7dc;
+  --card: #fffdfa;
+  --ink: #1e1e1e;
+  --muted: #7a7269;
+  --border: #ddd2c3;
+  --gold: #c8973a;
+  --gold-light: #ddb15a;
+  --sage: #4a6741;
+  --shadow: rgba(30, 30, 30, 0.06);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Outfit', sans-serif;
+}
+
+button {
+  cursor: pointer;
+}
