@@ -1,122 +1,132 @@
-DecideWise
+🎯 DecideWise
+
 Make big decisions with confidence — not guesswork.
-DecideWise is a multi-criteria decision analysis (MCDA) web app that helps you compare options logically, visually, and objectively. Whether you're choosing a job offer, a city to live in, a university, or a laptop — DecideWise turns overwhelming choices into clear, data-driven decisions.
 
-What it does
-Most important decisions — job offers, where to live, what to buy — get made based on gut feeling, ignoring factors that actually matter. DecideWise fixes that by turning your priorities into a weighted scoring system. You define what matters and how much, rate each option, and the algorithm surfaces the winner transparently.
-The result isn't just a number. You get bar charts, radar charts, a full score breakdown, a confidence indicator, and a saved history of every decision you've ever made.
+DecideWise is a multi-criteria decision analysis (MCDA) web application that helps you compare options logically, visually, and objectively. Whether you're choosing a job offer, a university, a laptop, or a city to live in — DecideWise turns overwhelming choices into clear, data-driven decisions.
 
-How it works
+✨ Features
+
+🧩 Multi-Criteria Decision System — Define any number of criteria tailored to your decision
+⚖️ Custom Weight Assignment — Assign percentage weights to each criterion based on your priorities
+🧮 Weighted Scoring Algorithm — Each option is scored using a transparent weighted average formula
+📊 Visual Comparison Charts — Bar charts, radar charts, and score breakdowns for instant insight
+💾 Saved Decisions — Store and revisit past decisions (localStorage)
+📚 Decision History — Track how your thinking evolves over time
+📱 Responsive UI — Works seamlessly on desktop and mobile
+🎯 Confidence Indicator — Know instantly if it's a clear win or a close call
+
+🧠 How It Works
+
 DecideWise uses the Weighted Sum Model (WSM) — a classic multi-criteria decision analysis algorithm:
-Score(option) = Σ (weight_i / totalWeight × score_i)
-Example
-CriterionWeightJob AJob BSalary40%86Location20%79Work-Life Balance15%68Growth25%97Total7.757.15
-→ DecideWise recommends Job A.
 
-Features
+Score(option) = Σ (weight_i × score_i)
 
-Multi-criteria decision system — define any number of criteria tailored to your specific decision
-Custom weight assignment — set percentage weights per criterion; must total exactly 100%
-Auto-normalize — one click redistributes weights proportionally if they don't sum to 100%
-Weighted scoring matrix — rate each option 1–10 per criterion with color-coded sliders
-Confidence indicator — automatically calculates whether the result is a clear win or a close call
-Visual comparison — bar chart, radar chart, and detailed score breakdown table
-5 quick-start templates — Job Offer, City to Live In, University, Laptop/Tech, Custom
-Decision history — all decisions saved to localStorage; revisit and reload any past decision
-Fully offline — no backend, no account, no server required
+Example — Choosing Between Two Jobs
 
+Criteria         Weight   Job A   Job B
+Salary             40%      8       6
+Location           20%      7       9
+Work-Life Balance  15%      6       8
+Growth             25%      9       7
 
-The 4-step flow
-Home → Setup → Criteria → Scoring → Results
-Step 1 — Setup: Name your decision and add at least 2 options to compare.
-Step 2 — Criteria: Add criteria and assign weights. The app validates that weights sum to exactly 100%.
-Step 3 — Scoring: Rate every option 1–10 across all criteria using an interactive matrix. A progress bar tracks completion.
-Step 4 — Results: See the winner, confidence level, ranking, and three different chart views. Save the decision to history.
-Each step only unlocks when the previous one is complete, ensuring data integrity throughout.
+Job A Total: (0.40×8) + (0.20×7) + (0.15×6) + (0.25×9) = 7.75 ✅
+Job B Total: (0.40×6) + (0.20×9) + (0.15×8) + (0.25×7) = 7.15
 
-Tech stack
-LayerTechnologyUIReact 18ChartsRecharts 2.8StateReact Hooks (custom)BuildVite 5StoragelocalStorageStylingCSS-in-JS (inline)
-No Redux, no external state library, no backend. The scoring logic is fully decoupled from the UI — swapping localStorage for a REST API only requires changing decisionStore.js.
+DecideWise recommends Job A 🎉
 
-Project structure
-decidewise/
-├── index.html                    # Entry point, CSS variables, Google Fonts
-├── vite.config.js
-├── package.json
-└── src/
-    ├── main.jsx                  # React root
-    ├── App.jsx                   # Global state + step routing
-    ├── types/
-    │   └── index.js              # Templates, score labels, color palette
-    ├── utils/
-    │   └── scoringAlgorithm.js   # WSM algorithm, ranking, confidence, chart data
-    ├── store/
-    │   └── decisionStore.js      # useDecision + useDecisionStore hooks
-    └── components/
-        ├── Home.jsx              # Landing page
-        ├── Stepper.jsx           # Progress indicator bar
-        ├── Setup.jsx             # Step 1: title + options
-        ├── CriteriaBuilder.jsx   # Step 2: criteria + weight sliders
-        ├── ScoreMatrix.jsx       # Step 3: scoring table
-        ├── Results.jsx           # Step 4: charts + winner + save
-        └── HistoryPanel.jsx      # Slide-in history drawer
+🗺️ The 4-Step Flow
 
-Getting started
+① Setup → ② Criteria → ③ Scoring → ④ Results
+
+① Setup     — Name your decision and add at least 2 options to compare
+② Criteria  — Add criteria and assign % weights (must total exactly 100%)
+③ Scoring   — Rate each option 1–10 per criterion using interactive sliders
+④ Results   — See the winner, confidence level, charts, and save to history
+
+🛠️ Tech Stack
+
+Layer        Technology
+Frontend     React 18
+Charts       Recharts 2.8
+State        React Hooks (custom)
+Build        Vite 5
+Storage      localStorage
+Styling      CSS-in-JS
+
+🚀 Getting Started
+
 Prerequisites
 
 Node.js >= 18
 npm or yarn
-
 Installation
-bashgit clone https://github.com/yourusername/decidewise.git
-cd decidewise
-npm install
-npm run dev
-Open http://localhost:5173 in your browser.
-Build for production
-bashnpm run build
+
+git clone https://github.com/yourusername/decidewise.git cd decidewise npm install npm run dev
+
+Build for Production
+
+npm run build
 npm run preview
 
-The core algorithm
-The entire decision engine lives in src/utils/scoringAlgorithm.js. It's intentionally kept pure (no React, no side effects) so it can be tested or reused independently.
-jsfunction calcScores(options, criteria, scores) {
-  const totalW = criteria.reduce((s, c) => s + c.weight, 0);
+📁 Project Structure
 
-  return options.map(opt => {
-    let total = 0;
-    criteria.forEach(c => {
-      const raw = scores[opt.id]?.[c.id] ?? 0;
-      const normalizedWeight = c.weight / totalW;
-      total += normalizedWeight * raw;
-    });
-    return { optionName: opt.name, total: +total.toFixed(2) };
-  });
-}
-Key supporting functions:
+decidewise/
+├── index.html
+├── vite.config.js
+├── package.json
+└── src/
+├── main.jsx
+├── App.jsx                   — Global state + step routing
+├── types/
+│   └── index.js              — Templates, labels, color palette
+├── utils/
+│   └── scoringAlgorithm.js   — WSM engine — the core of everything
+├── store/
+│   └── decisionStore.js      — useDecision + useDecisionStore hooks
+└── components/
+├── Home.jsx              — Landing page
+├── Stepper.jsx           — Progress indicator
+├── Setup.jsx             — Step 1: title + options
+├── CriteriaBuilder.jsx   — Step 2: criteria + weight sliders
+├── ScoreMatrix.jsx       — Step 3: scoring table
+├── Results.jsx           — Step 4: charts + winner + save
+└── HistoryPanel.jsx      — Slide-in history drawer
 
-rank(scored) — sorts options highest to lowest score
-confidence(margin) — returns High / Moderate / Very Close Call based on the gap between #1 and #2
-validateW(criteria) — checks weights sum to exactly 100%
-generateRadarData() / generateBarData() — formats data for Recharts
+📊 Portfolio Value
+
+✅ Algorithm Design     — Weighted scoring & MCDA implementation
+✅ Data Modeling        — Flexible schema for options, criteria, and weights
+✅ Analytics Dashboard  — Interactive charts and visual comparisons
+✅ State Management     — Complex, nested application state via custom hooks
+✅ UX Thinking          — Guiding users through a structured decision process
+✅ Persistence Layer    — Saving and loading decisions across sessions
+
+🗺️ Roadmap
+
+☐ 🤖 AI-assisted criteria suggestions
+☐ 👥 Team / collaborative decisions
+☐ 📄 Export to PDF report
+☐ 📱 Mobile app (React Native)
+☐ 🌙 Dark / Light mode
+☐ 🔄 Decision comparison history
+
+🤝 Contributing
+
+Pull requests are welcome! For major changes, please open an issue first.
+
+Fork the repo
+Create your branch → git checkout -b feature/amazing-feature
+Commit your changes → git commit -m 'Add amazing feature'
+Push to the branch → git push origin feature/amazing-feature
+Open a Pull Request
+📄 License
+
+MIT License — see LICENSE for details.
+
+Built with ❤️ to eliminate decision fatigue.
 
 
-Confidence levels
-Margin between #1 and #2Level≥ 2.0High Confidence1.0 – 1.99Moderate< 1.0Very Close Call
-A "Very Close Call" is a signal to reconsider your weights, not necessarily to pick differently.
-
-Roadmap
-
- AI-assisted criteria suggestions (Anthropic API)
- Export to PDF report
- Backend REST API (Node.js + PostgreSQL) for cross-device sync
- Collaborative decisions — multiple users weight independently, results averaged
- React Native mobile app
- Dark mode
 
 
-Contributing
-Pull requests are welcome. For significant changes, open an issue first to discuss what you'd like to change.
-bashgit checkout -b feature/your-feature
-git commit -m "Add your feature"
-git push origin feature/your-feature
-# Open a Pull Request
+
+
